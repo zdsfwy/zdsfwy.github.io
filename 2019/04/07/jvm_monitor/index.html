@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Monitor JVM Process RemotelyMonitor JVM from command line locallyYou can monitor your target JVM process with many tools, say jstat, jinfo, jstack, jmap and so on. First find out vimid with 1jps -l an">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2019/04/07/jvm_monitor/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Monitor JVM Process RemotelyMonitor JVM from command line locallyYou can monitor your target JVM process with many tools, say jstat, jinfo, jstack, jmap and so on. First find out vimid with 1jps -l an">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-07T11:23:32.194Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="Monitor JVM Process RemotelyMonitor JVM from command line locallyYou can monitor your target JVM process with many tools, say jstat, jinfo, jstack, jmap and so on. First find out vimid with 1jps -l an">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-jvm_monitor" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/07/jvm_monitor/" class="article-date">
+  <time datetime="2019-04-07T11:23:32.193Z" itemprop="datePublished">2019-04-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Monitor-JVM-Process-Remotely"><a href="#Monitor-JVM-Process-Remotely" class="headerlink" title="Monitor JVM Process Remotely"></a>Monitor JVM Process Remotely</h1><h2 id="Monitor-JVM-from-command-line-locally"><a href="#Monitor-JVM-from-command-line-locally" class="headerlink" title="Monitor JVM from command line locally"></a>Monitor JVM from command line locally</h2><p>You can monitor your target JVM process with many tools, say <code>jstat</code>, <code>jinfo</code>, <code>jstack</code>, <code>jmap</code> and so on.</p>
+<p>First find out <code>vimid</code> with</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps -l</span><br></pre></td></tr></table></figure>
+<p>and then run</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo &lt;vimid&gt;</span><br></pre></td></tr></table></figure>
+<p>But for the first time, you may get the following errors</p>
+<blockquote>
+<p>Error attaching to process: sun.jvm.hotspot.debugger.DebuggerException: Can’t attach to the process … not permitted …</p>
+</blockquote>
+<p>After some googling, we can slove it by (it’s due to a bug of Linux kernal)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope</span><br></pre></td></tr></table></figure>
+<h2 id="Mointor-JVM-with-graphical-tools-remotely"><a href="#Mointor-JVM-with-graphical-tools-remotely" class="headerlink" title="Mointor JVM with graphical tools remotely"></a>Mointor JVM with graphical tools remotely</h2><h3 id="Setup-JMX-RMI"><a href="#Setup-JMX-RMI" class="headerlink" title="Setup JMX RMI"></a>Setup JMX RMI</h3><p>Besides using commands locally, we can also use graphical tools like <code>Jconsole</code> or <code>VisualVM</code> to monitor a JVM process remotely. The latter one is a replacement for the former one.</p>
+<p>To enable such remote monitoring, you need to make your remote JVM process to be ready for remote JMX RMI connections.</p>
+<p>Here is the <a href="https://docs.oracle.com/javase/9/management/monitoring-and-management-using-jmx-technology.htm" target="_blank" rel="noopener">official reference</a>.</p>
+<p>I summarize my steps as following.</p>
+<p>cp JRE_HOME/lib/management/management.properties to home directory<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">com.sun.management.jmxremote.port=xxx</span><br><span class="line">com.sun.management.jmxremote.ssl=false</span><br><span class="line">com.sun.management.jmxremote.authenticate=true</span><br><span class="line">com.sun.management.jmxremote.password.file=/home/benson/jmxremote.password</span><br><span class="line">com.sun.management.jmxremote.access.file=/home/benson/jmxremote.access</span><br><span class="line">com.sun.management.jmxremote.rmi.port=xxx // this is very important, let&apos;s talk about it later</span><br></pre></td></tr></table></figure></p>
+<p>cp JRE_HOME/lib/management/jmxremote.password.template to home directory as jmxremote.password.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">monitorRole xxx</span><br><span class="line">controlRole xxx</span><br></pre></td></tr></table></figure></p>
+<p>For security reason, you have to change it as owner readable/writable only<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 jmxremote.password</span><br></pre></td></tr></table></figure></p>
+<p>cp JRE_HOME/lib/management/jmxremote.access to home directory.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">monitorRole   readonly</span><br><span class="line">controlRole   readwrite \</span><br><span class="line">              create javax.management.monitor.*,javax.management.timer.* \</span><br><span class="line">              unregiste</span><br></pre></td></tr></table></figure></p>
+<p>start your jar with your mangement file specified<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar -Dcom.sun.management.config.file=$HOME/management.properties -Djava.rmi.server.hostname=xx.xx.xx.xx xxx.jar</span><br></pre></td></tr></table></figure></p>
+<p>Please note that <code>java.rmi.server.hostname</code> is also important here. According to the offical document</p>
+<blockquote>
+<p>By default, the remote stubs for locally created remote objects that are sent to client contains the IP address of the local host in dotted-quad format. For remote stubs to be associated with a specific interface address, the java.rmi.server.hostname system property must be set to IP address of that interface.</p>
+</blockquote>
+<p>In my case, if I start my remote Java VM without <code>java.rmi.server.hostname</code> being specified to the remote public IP, with Jconsole started with <code>-debug</code>, I got error</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java.rmi.ConnectException: Connection refused to host: 127.0.0.1; nested exception is: </span><br><span class="line">	java.net.ConnectException: Connection refused (Connection refused)</span><br><span class="line">	at sun.rmi.transport.tcp.TCPEndpoint.newSocket(TCPEndpoint.java:619)</span><br></pre></td></tr></table></figure>
+<p>As I mentioned earilier, if you are in a serious production environment(with restrcit firewall rule), you probably need to setup <code>com.sun.management.jmxremote.rmi.port</code> as well.</p>
+<p>According to the offical document</p>
+<blockquote>
+<p>setting this property(<code>com.sun.management.jmxremote.port=portNum</code>) publishes an additional RMI connector in a private read-only registry at the specified port using the name, jmxrmi. The port number to which the RMI connector will be bound using the system property:<br><strong>com.sun.management.jmxremote.rmi.port</strong></p>
+</blockquote>
+<p>If this property is not specified, it will randomly pick an unused port. As a result, if you are using white list for your firewall rule, connections to your remote JVM process will be blocked.</p>
+<p>Lastly, please notice that when adding JMX connection in VisualVM, you need to specify <code>com.sun.management.jmxremote.port</code> rather than <code>com.sun.management.jmxremote.rmi.port</code>. Then former one should be where the RMI registry listen to. </p>
+<h3 id="Connect-to-remote-server-with-jvisualvm"><a href="#Connect-to-remote-server-with-jvisualvm" class="headerlink" title="Connect to remote server with jvisualvm"></a>Connect to remote server with jvisualvm</h3><p>It’s straight forward to setup your jvisualvm client. Just note that if you follow my preivous steps, you need to specify the credentials configed in file <code>jmxremote.password</code>.</p>
+<h3 id="Setup-Jstatd-Optional"><a href="#Setup-Jstatd-Optional" class="headerlink" title="Setup Jstatd (Optional)"></a>Setup Jstatd (Optional)</h3><p>Alike to JMX, Jstatd also provides you ability to monitor JVM. But it’s much more limited. There is a comparison between JMX and Jstatd <a href="https://blog.jakubholy.net/2012/09/21/visualvm-monitoring-remote-jvm-over-ssh-jmx-or-not/" target="_blank" rel="noopener">here</a>.</p>
+<p>In average cases, JMX is enough for you. The reason why I need to setup <code>Jstatd</code> is that <code>Visual GC</code> plugin is based on it. The <code>heap</code> graph coming with raw VisualVM is too simple to do meanful JVM memory monitoring.</p>
+<p>Starting <code>Jstatd</code> directly will give you error<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Could not create remote object</span><br><span class="line">access denied (&quot;java.util.PropertyPermission&quot; &quot;java.rmi.server.ignoreSubClasses&quot; &quot;write&quot;)</span><br><span class="line">java.security.AccessControlException: access denied (&quot;java.util.PropertyPermission&quot; &quot;java.rmi.server.ignoreSubClasses&quot; &quot;write&quot;)</span><br><span class="line">        at java.security.AccessControlContext.checkPermission(AccessControlContext.java:372)</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
+<p>You can refer to the offical document <a href="https://docs.oracle.com/javase/1.5.0/docs/tooldocs/share/jstatd.html" target="_blank" rel="noopener">Jstatd</a> and <a href="https://docs.oracle.com/javase/1.5.0/docs/guide/security/PolicyFiles.html" target="_blank" rel="noopener">Policy File Syntax</a>.</p>
+<p>Basically, you need to first setup a policy file<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grant codebase &quot;file:$&#123;java.home&#125;/../lib/tools.jar&quot; &#123;</span><br><span class="line">   permission java.security.AllPermission;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>The above config uses <a href="https://docs.oracle.com/javase/1.5.0/docs/guide/security/PolicyFiles.html#PropertyExp" target="_blank" rel="noopener">Property Expansion</a>. Please note that</p>
+<blockquote>
+<p>If a property can’t be expanded in a grant entry, permission entry, or keystore entry, that entry is ignored.</p>
+</blockquote>
+<p>Then start jstatd with<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstatd -J-Djava.security.policy=/home/benson/jmxremote/jstatd.all.policy  -J-Djava.rmi.server.hostname=xxx</span><br></pre></td></tr></table></figure></p>
+<p>you may also specify <code>-J-Djava.rmi.server.logCalls=true</code> for debugging purpose.<br>Please note that you need to specify <code>java.rmi.server.hostname</code> as before.</p>
+<p>By default, the above command will start jstatd with an internal RMI registry, bound to the default port 1099. Besides, it will also randomly pick a port for the RMI connector.</p>
+<blockquote>
+<p>Note: If your JVM process is behind a firewall, you need to take special care to have this random port open to your monitor client.</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/07/jvm_monitor/" data-id="cju70ni7n0003m9qavkpc3n1m" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/07/import_spring_framework_source/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/07/gaaccess/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operation-Linux/">Operation Linux</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Operation-Linux/" style="font-size: 10px;">Operation Linux</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/07/setup_nginx_for_msa_development/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/import_spring_framework_source/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/jvm_monitor/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/gaaccess/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/copy_file/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

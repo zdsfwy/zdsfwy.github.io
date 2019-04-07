@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Import spring-framework into EclipseBasically, you just need to follow this guide from spring-framwork github page  Note that I checkout the master branch  From the offical guide, there are 6 steps.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2019/04/07/import_spring_framework_source/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Import spring-framework into EclipseBasically, you just need to follow this guide from spring-framwork github page  Note that I checkout the master branch  From the offical guide, there are 6 steps.">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-07T12:43:15.212Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="Import spring-framework into EclipseBasically, you just need to follow this guide from spring-framwork github page  Note that I checkout the master branch  From the offical guide, there are 6 steps.">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-import_spring_framework_source" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/07/import_spring_framework_source/" class="article-date">
+  <time datetime="2019-04-07T12:43:15.208Z" itemprop="datePublished">2019-04-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Import-spring-framework-into-Eclipse"><a href="#Import-spring-framework-into-Eclipse" class="headerlink" title="Import spring-framework into Eclipse"></a>Import spring-framework into Eclipse</h1><p>Basically, you just need to follow this guide from spring-framwork <a href="https://github.com/spring-projects/spring-framework/blob/master/import-into-eclipse.md" target="_blank" rel="noopener">github page</a></p>
+<blockquote>
+<p>Note that I checkout the <code>master</code> branch</p>
+</blockquote>
+<p>From the offical guide, there are 6 steps.</p>
+<ol>
+<li>Precompile spring-oxm with ./gradlew :spring-oxm:compileTestJava</li>
+<li>Import into Eclipse (File -&gt; Import -&gt; Gradle -&gt; Existing Gradle Project -&gt; Navigate to directory -&gt; Select Finish)</li>
+<li>If prompted, exclude the spring-aspects module (or after the import by closing or deleting the project)</li>
+<li>In the spring-oxm project, add the two folders (castor and jaxb) in build/generated-sources to the build path (right click on them and select Build Path -&gt; Use as Source Folder)</li>
+<li>To apply project specific settings run ./gradlew eclipseBuildship</li>
+<li>Code away</li>
+</ol>
+<p>Here I record problems encountered which may be helpful to someone else.</p>
+<blockquote>
+<ol>
+<li>Precompile spring-oxm with ./gradlew :spring-oxm:compileTestJava</li>
+</ol>
+</blockquote>
+<p>I have network problem in downloading gradle distribution online, it’s extremely slow.</p>
+<p>To workaround it, I first used the greate tool <code>aria2c</code> to download gradle zip file to my local.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aria2c -x 8 -s 8 -k 1M  https://services.gradle.org/distributions/gradle-4.10.3-bin.zip</span><br></pre></td></tr></table></figure>
+<p>It issues 8 threads to download the target file parallelly.</p>
+<p>Then, locate the <code>gradle-wrapper.properties</code> file under <code>spring-framework/gradle/wrapper</code>, modify its <code>distributionUrl</code> property<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#distributionUrl=https\://services.gradle.org/distributions/gradle-4.10.3-bin.zip</span></span><br><span class="line">distributionUrl=file:///home/benson/Downloads/gradle-4.10.3-bin.zip</span><br></pre></td></tr></table></figure></p>
+<p>In this way, <code>gradlew</code> will download the zip file from your local.</p>
+<blockquote>
+<ol start="4">
+<li>In the spring-oxm project, add the two folders (castor and jaxb) in build/generated-sources to the build path (right click on them and select Build Path -&gt; Use as Source Folder)</li>
+</ol>
+</blockquote>
+<p>Successfully go through step 2 to 3. But then I couldn’t find <code>build</code> folder under <code>spring-oxm</code>, in Eclipse package exploreer.</p>
+<p>To show it, you need to ensure</p>
+<ul>
+<li><p>The <code>Java Element Filter</code> in package explorer have <code>Gradle build folder</code> unchecked.</p>
+</li>
+<li><p><code>Resource &gt; Resource Filters</code> in project property doesn’t have rule to exclude build folder.</p>
+</li>
+</ul>
+<p>Besides this, I also encountered error that</p>
+<blockquote>
+<p>xxx is not accessible due to restriction on required library C:\Program Files\Java\jdk1.8.0_181\jre\lib\rt.jar</p>
+</blockquote>
+<p>I found one solution for this from Stackoverlow <a href="https://stackoverflow.com/questions/860187/access-restriction-on-class-due-to-restriction-on-required-library-rt-jar" target="_blank" rel="noopener">here</a></p>
+<p>I quote the solution here</p>
+<ol>
+<li>Go to the Build Path settings in the project properties.</li>
+<li>Remove the JRE System Library</li>
+<li>Add it back; Select “Add Library” and select the JRE System Library. The default worked for me.</li>
+</ol>
+<p>Lastly, there is another error under project <code>spring-beans</code>. It says that</p>
+<blockquote>
+<p>GroovyDynamicElementReader cannot be resolved to a type</p>
+</blockquote>
+<p>It requires to download corresponding Groovy plugin to resolve this problem.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/07/import_spring_framework_source/" data-id="cju70ni7m0002m9qavlvrbv0x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/07/setup_nginx_for_msa_development/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/07/jvm_monitor/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operation-Linux/">Operation Linux</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Operation-Linux/" style="font-size: 10px;">Operation Linux</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/07/setup_nginx_for_msa_development/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/import_spring_framework_source/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/jvm_monitor/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/gaaccess/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/copy_file/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

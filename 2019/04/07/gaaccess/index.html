@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Using GoAccess to monitor your nginx access logSuppose you built a Web site, you must be curious at how much traffic your site attract and how do people using it. You use Nginx as the coordinator serv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2019/04/07/gaaccess/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Using GoAccess to monitor your nginx access logSuppose you built a Web site, you must be curious at how much traffic your site attract and how do people using it. You use Nginx as the coordinator serv">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/goaccess.png">
+<meta property="og:updated_time" content="2019-04-07T11:23:16.934Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="Using GoAccess to monitor your nginx access logSuppose you built a Web site, you must be curious at how much traffic your site attract and how do people using it. You use Nginx as the coordinator serv">
+<meta name="twitter:image" content="http://yoursite.com/images/goaccess.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-gaaccess" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/07/gaaccess/" class="article-date">
+  <time datetime="2019-04-07T11:23:16.930Z" itemprop="datePublished">2019-04-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Using-GoAccess-to-monitor-your-nginx-access-log"><a href="#Using-GoAccess-to-monitor-your-nginx-access-log" class="headerlink" title="Using GoAccess to monitor your nginx access log"></a>Using GoAccess to monitor your nginx access log</h1><p>Suppose you built a Web site, you must be curious at how much traffic your site attract and how do people using it.</p>
+<p>You use Nginx as the coordinator server and you know you can analyze its access log.</p>
+<p>Analyzing plain text from stratch is hard, and here comes <a href="https://goaccess.io/" target="_blank" rel="noopener">GoAccess</a>, which is amazing.</p>
+<p>Here is how it looks.</p>
+<p><img src="/images/goaccess.png" alt=""></p>
+<p>It’s straight forward to setup GoAccess by following the offical <code>Get Started</code>. I just going through serveral points that you may need to take care.</p>
+<h2 id="1-Firstly-put-the-configuration-file-to-the-right-place"><a href="#1-Firstly-put-the-configuration-file-to-the-right-place" class="headerlink" title="1. Firstly put the configuration file to the right place"></a>1. Firstly put the configuration file to the right place</h2><p>Accordign to the doc</p>
+<blockquote>
+<p>The configuration file is located under ~/.goaccessrc or %sysconfdir%/goaccess.conf where %sysconfdir% is either /etc/, /usr/etc/ or /usr/local/etc/.</p>
+</blockquote>
+<p>It would be a good idea to make changes in the config file, otherwise you have to pass in them everytime your invoke <code>goaccess</code> in command line.</p>
+<h2 id="2-You-probably-need-to-change-the-log-format-for-nginx"><a href="#2-You-probably-need-to-change-the-log-format-for-nginx" class="headerlink" title="2. You probably need to change the log-format for nginx"></a>2. You probably need to change the log-format for nginx</h2><p>If you have several <code>Server</code>s (virtual hosts in Apache) configed in Nginx, you may need to change GoAccess’s default <code>COMBINED</code> log format.</p>
+<p>The <code>COMMBINED</code> format is<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%h %^[%d:%t %^] &quot;%r&quot; %s %b &quot;%R&quot; &quot;%u&quot;</span><br></pre></td></tr></table></figure></p>
+<p>and it does work perfectly with Nginx’s default access log format, which is<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; $status $body_bytes_sent &quot;$http_referer&quot; &quot;$http_user_agent&quot;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>However, as you can see, it doesn’t contain any info for virtual hosts.  To make GoAccess analyze virtual host as well, we need to change both Nginx access log format and GoAccess’s log format.</p>
+<p>Here is what I did. For backward compatibility, I just switch Nginx’s <code>$remote_user</code> to <code>$host</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;$remote_addr - $host [$time_local] &quot;$request&quot; $status $body_bytes_sent &quot;$http_referer&quot; &quot;$http_user_agent&quot;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>and change GoAccess <code>log-format</code> to<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%h %^ %v [%d:%t %^] &quot;%r&quot; %s %b &quot;%R&quot; &quot;%u&quot;</span><br></pre></td></tr></table></figure></p>
+<p><em>Please note that while using custom <code>log-format</code>, we need to specify <code>date-format</code> and <code>time-format</code> explict.</em></p>
+<p>That’s all for GoAccess for now.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/07/gaaccess/" data-id="cju70ni7l0001m9qadumflrn0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/07/jvm_monitor/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/07/copy_file/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operation-Linux/">Operation Linux</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Operation-Linux/" style="font-size: 10px;">Operation Linux</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/07/setup_nginx_for_msa_development/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/import_spring_framework_source/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/jvm_monitor/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/gaaccess/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/07/copy_file/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
