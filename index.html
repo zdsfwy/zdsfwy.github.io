@@ -62,6 +62,47 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-create-your-own-blog" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/08/create-your-own-blog/" class="article-date">
+  <time datetime="2019-04-08T00:06:09.855Z" itemprop="datePublished">2019-04-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/08/create-your-own-blog/">Create blog with Hexo on Git Page</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>After several comparison, I choose to use <code>Hexo</code> to build my personal blog. And for simplicity, I decide to use <code>Github Page</code> to host my blog.  </p>
+<p>Basically, you need to maintain two git repositories. One for <code>Hexo</code> itself, and another for the generated static files. The second is needed as <code>Github Page</code> requires its content to be push to a repository of certain name.</p>
+<p>generate static files<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure></p>
+<p>Copy generated files to the deploy folder (to be pushed to github)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># the first folder is where static files generated </span><br><span class="line"># You may need to also add the &quot;-n&quot; option to perform a dry run to see the changes in advance.</span><br><span class="line">rsync -avzh --delete --exclude &apos;.git&apos;  &lt;SOME_PATH&gt;/blog/public/ &lt;SOME_PATH&gt;/blog_deploy/</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://www.createdbypete.com/articles/a-practical-guide-to-using-rsync/" target="_blank" rel="noopener">rsync usage reference</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/08/create-your-own-blog/" data-id="cju7lic040007siqa7bc1vzjt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-setup_nginx_for_msa_development" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/07/setup_nginx_for_msa_development/" class="article-date">
@@ -85,7 +126,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/07/setup_nginx_for_msa_development/" data-id="cju70ni7o0004m9qawxmkqy51" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/07/setup_nginx_for_msa_development/" data-id="cju7lic08000csiqa8hfvqynu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -165,7 +206,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/07/import_spring_framework_source/" data-id="cju70ni7m0002m9qavlvrbv0x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/07/import_spring_framework_source/" data-id="cju7lic06000asiqa39wq0k57" class="article-share-link">Share</a>
       
       
     </footer>
@@ -240,7 +281,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/07/jvm_monitor/" data-id="cju70ni7n0003m9qavkpc3n1m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/07/jvm_monitor/" data-id="cju7lic07000bsiqahpzzt72t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -285,7 +326,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/07/gaaccess/" data-id="cju70ni7l0001m9qadumflrn0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/07/gaaccess/" data-id="cju7lic040008siqaxw2ul3t3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -318,7 +359,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/07/copy_file/" data-id="cju70ni7h0000m9qahrmh2pvl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/07/copy_file/" data-id="cju7lic030006siqa0d216amo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -367,52 +408,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/04/tmux/" data-id="cju70ni7p0005m9qa2u5basy1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/04/tmux/" data-id="cju7lic09000dsiqau5qgwt98" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Operation-Linux/">Operation Linux</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-create-your-own-blog" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/11/04/create-your-own-blog/" class="article-date">
-  <time datetime="2018-11-04T13:55:40.000Z" itemprop="datePublished">2018-11-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/04/create-your-own-blog/">create_your_own_blog</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>After several comparison, I choose to use <code>Hexo</code> to build my personal blog. And for simplicity, I decide to use <code>Github Page</code> to host my blog.  </p>
-<p>Basically, you need to maintain two git repositories. One for <code>Hexo</code> itself, and another for the generated static files. The second is needed as <code>Github Page</code> requires its content to be push to a repository of certain name.</p>
-<p>generate static files<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure></p>
-<p>Copy generated files to the deploy folder (to be pushed to github)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># the first folder is where static files generated </span><br><span class="line">rsync -avzhn --delete --exclude &apos;.git&apos;  &lt;SOME_PATH&gt;/blog/public/ &lt;SOME_PATH&gt;/blog_deploy/</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://www.createdbypete.com/articles/a-practical-guide-to-using-rsync/" target="_blank" rel="noopener">rsync usage reference</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/04/create-your-own-blog/" data-id="cju70ni87000dm9qaz7uopxsv" class="article-share-link">Share</a>
-      
-      
     </footer>
   </div>
   
@@ -455,7 +455,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/04/hello-world/" data-id="cjo2uuvvp0000gzqa0of1es5t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/04/hello-world/" data-id="cju7lic050009siqacasp7wzc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -510,6 +510,10 @@
       <ul>
         
           <li>
+            <a href="/2019/04/08/create-your-own-blog/">Create blog with Hexo on Git Page</a>
+          </li>
+        
+          <li>
             <a href="/2019/04/07/setup_nginx_for_msa_development/">(no title)</a>
           </li>
         
@@ -523,10 +527,6 @@
         
           <li>
             <a href="/2019/04/07/gaaccess/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/07/copy_file/">(no title)</a>
           </li>
         
       </ul>

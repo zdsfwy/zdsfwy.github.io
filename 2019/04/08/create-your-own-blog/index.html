@@ -5,18 +5,18 @@
   
 
   
-  <title>create_your_own_blog | Hexo</title>
+  <title>Create blog with Hexo on Git Page | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="After several comparison, I choose to use Hexo to build my personal blog. And for simplicity, I decide to use Github Page to host my blog.   Basically, you need to maintain two git repositories. One f">
 <meta property="og:type" content="article">
-<meta property="og:title" content="create_your_own_blog">
-<meta property="og:url" content="http://yoursite.com/2018/11/04/create-your-own-blog/index.html">
+<meta property="og:title" content="Create blog with Hexo on Git Page">
+<meta property="og:url" content="http://yoursite.com/2019/04/08/create-your-own-blog/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="After several comparison, I choose to use Hexo to build my personal blog. And for simplicity, I decide to use Github Page to host my blog.   Basically, you need to maintain two git repositories. One f">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-07T11:24:22.682Z">
+<meta property="og:updated_time" content="2019-04-08T00:06:09.855Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="create_your_own_blog">
+<meta name="twitter:title" content="Create blog with Hexo on Git Page">
 <meta name="twitter:description" content="After several comparison, I choose to use Hexo to build my personal blog. And for simplicity, I decide to use Github Page to host my blog.   Basically, you need to maintain two git repositories. One f">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -66,8 +66,8 @@
       <div class="outer">
         <section id="main"><article id="post-create-your-own-blog" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/11/04/create-your-own-blog/" class="article-date">
-  <time datetime="2018-11-04T13:55:40.000Z" itemprop="datePublished">2018-11-04</time>
+    <a href="/2019/04/08/create-your-own-blog/" class="article-date">
+  <time datetime="2019-04-08T00:06:09.855Z" itemprop="datePublished">2019-04-08</time>
 </a>
     
   </div>
@@ -78,7 +78,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      create_your_own_blog
+      Create blog with Hexo on Git Page
     </h1>
   
 
@@ -89,13 +89,13 @@
         <p>After several comparison, I choose to use <code>Hexo</code> to build my personal blog. And for simplicity, I decide to use <code>Github Page</code> to host my blog.  </p>
 <p>Basically, you need to maintain two git repositories. One for <code>Hexo</code> itself, and another for the generated static files. The second is needed as <code>Github Page</code> requires its content to be push to a repository of certain name.</p>
 <p>generate static files<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure></p>
-<p>Copy generated files to the deploy folder (to be pushed to github)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># the first folder is where static files generated </span><br><span class="line">rsync -avzhn --delete --exclude &apos;.git&apos;  &lt;SOME_PATH&gt;/blog/public/ &lt;SOME_PATH&gt;/blog_deploy/</span><br></pre></td></tr></table></figure></p>
+<p>Copy generated files to the deploy folder (to be pushed to github)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># the first folder is where static files generated </span><br><span class="line"># You may need to also add the &quot;-n&quot; option to perform a dry run to see the changes in advance.</span><br><span class="line">rsync -avzh --delete --exclude &apos;.git&apos;  &lt;SOME_PATH&gt;/blog/public/ &lt;SOME_PATH&gt;/blog_deploy/</span><br></pre></td></tr></table></figure></p>
 <p><a href="https://www.createdbypete.com/articles/a-practical-guide-to-using-rsync/" target="_blank" rel="noopener">rsync usage reference</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/04/create-your-own-blog/" data-id="cju70ni87000dm9qaz7uopxsv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/08/create-your-own-blog/" data-id="cju7lic040007siqa7bc1vzjt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -104,19 +104,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/11/04/tmux/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Use tmux to manage your remote server
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/11/04/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/04/07/setup_nginx_for_msa_development/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title"></div>
     </a>
   
 </nav>
@@ -167,6 +158,10 @@
       <ul>
         
           <li>
+            <a href="/2019/04/08/create-your-own-blog/">Create blog with Hexo on Git Page</a>
+          </li>
+        
+          <li>
             <a href="/2019/04/07/setup_nginx_for_msa_development/">(no title)</a>
           </li>
         
@@ -180,10 +175,6 @@
         
           <li>
             <a href="/2019/04/07/gaaccess/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/07/copy_file/">(no title)</a>
           </li>
         
       </ul>
