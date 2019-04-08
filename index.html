@@ -62,10 +62,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-create-your-own-blog" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-tmux" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/08/create-your-own-blog/" class="article-date">
-  <time datetime="2019-04-08T00:06:09.855Z" itemprop="datePublished">2019-04-08</time>
+    <a href="/2019/04/08/tmux/" class="article-date">
+  <time datetime="2019-04-08T00:11:06.723Z" itemprop="datePublished">2019-04-08</time>
 </a>
     
   </div>
@@ -76,7 +76,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/08/create-your-own-blog/">Create blog with Hexo on Git Page</a>
+      <a class="article-title" href="/2019/04/08/tmux/">Use tmux to manage your remote server</a>
     </h1>
   
 
@@ -84,16 +84,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>After several comparison, I choose to use <code>Hexo</code> to build my personal blog. And for simplicity, I decide to use <code>Github Page</code> to host my blog.  </p>
-<p>Basically, you need to maintain two git repositories. One for <code>Hexo</code> itself, and another for the generated static files. The second is needed as <code>Github Page</code> requires its content to be push to a repository of certain name.</p>
-<p>generate static files<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure></p>
-<p>Copy generated files to the deploy folder (to be pushed to github)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># the first folder is where static files generated </span><br><span class="line"># You may need to also add the &quot;-n&quot; option to perform a dry run to see the changes in advance.</span><br><span class="line">rsync -avzh --delete --exclude &apos;.git&apos;  &lt;SOME_PATH&gt;/blog/public/ &lt;SOME_PATH&gt;/blog_deploy/</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://www.createdbypete.com/articles/a-practical-guide-to-using-rsync/" target="_blank" rel="noopener">rsync usage reference</a></p>
+        <p>Concepts: one sesson can have multiple windows, and one window can have multiple panels.</p>
+<p>Suppose now you just ssh to your remote server.<br>First create a new tmux session. By default, it has one window and one panel in it.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux</span><br></pre></td></tr></table></figure></p>
+<p>Give the session a meaningful name, so that you can later attach to it easily<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; $</span><br></pre></td></tr></table></figure></p>
+<p>Give the current window a meaningful name<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; ,</span><br></pre></td></tr></table></figure></p>
+<p>Split the current panel<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; % // horizontally</span><br><span class="line">&lt;prefix&gt; <span class="string">" // vertically</span></span><br></pre></td></tr></table></figure></p>
+<p>Oops, you create a new panel by mistake. Let’s close it<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; x</span><br></pre></td></tr></table></figure></p>
+<p>And now you have too many panels in one window, let’s create a new window<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; c</span><br></pre></td></tr></table></figure></p>
+<p>Switch between windows<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; n // to next</span><br><span class="line">&lt;prefix&gt; p // to previous</span><br></pre></td></tr></table></figure></p>
+<p>And close a window<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; &amp; // close a window</span><br></pre></td></tr></table></figure></p>
+<p>Now you have your work done. While closing your connection to remote server, you want your program keep running.<br>Or, you want to pick up where you was later. It’s easy, just detach the session<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; d</span><br></pre></td></tr></table></figure></p>
+<p>Serval days later, you come back and want to resume your work. First, list all session alive in the backend.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux ls</span><br></pre></td></tr></table></figure></p>
+<p>Attach to your desired session by name<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux a -t &lt;name&gt;</span><br></pre></td></tr></table></figure></p>
+<p>These commands are pretty much you need for tmux.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/08/create-your-own-blog/" data-id="cju7lic040007siqa7bc1vzjt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/08/tmux/" data-id="cju7lic09000dsiqau5qgwt98" class="article-share-link">Share</a>
       
       
     </footer>
@@ -105,17 +113,27 @@
   
     <article id="post-setup_nginx_for_msa_development" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/07/setup_nginx_for_msa_development/" class="article-date">
-  <time datetime="2019-04-07T13:55:36.765Z" itemprop="datePublished">2019-04-07</time>
+    <a href="/2019/04/08/setup_nginx_for_msa_development/" class="article-date">
+  <time datetime="2019-04-08T00:10:25.148Z" itemprop="datePublished">2019-04-08</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/08/setup_nginx_for_msa_development/">Setup Nginx for MSA Development</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Setup-Nginx-for-MSA-Development"><a href="#Setup-Nginx-for-MSA-Development" class="headerlink" title="Setup Nginx for MSA Development"></a>Setup Nginx for MSA Development</h1><h2 id="Problems-to-solve"><a href="#Problems-to-solve" class="headerlink" title="Problems to solve"></a>Problems to solve</h2><p>Our product consists of several sub-systems. Each sub-system is developed and maintained by a different team. And code-wise, the entire product is organized with Maven in a big Git repository (acutally, better to be splitted) and each sub-system is maintained as a Maven module.</p>
+        <h2 id="Problems-to-solve"><a href="#Problems-to-solve" class="headerlink" title="Problems to solve"></a>Problems to solve</h2><p>Our product consists of several sub-systems. Each sub-system is developed and maintained by a different team. And code-wise, the entire product is organized with Maven in a big Git repository (acutally, better to be splitted) and each sub-system is maintained as a Maven module.</p>
 <p>Originally, to setup environment for development, we have to build all modules besides the ones we are turely responsible for. The drawback is obvious, it takes two much time to build the whole project. And as the number of modules increases, this problem becomes worser. In addition, to incooperate changes from other module during development, each time we have to recompile those modules. Although we can utilize Maven to only build partial or specific modules, it’s still a bit annoying.<br>Last but not least, it can be quite difficult to setup everything you needed if one modules have many indirect dependencies, which may require different configurations to startup. </p>
 <h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>To migarte this problem, we maintain a running product instance containing all sub-systems, which is updated on a regular basis (Say one day). Let’s call such environment as “Development environment”. And setup Nginx locally to route the requests generated during development to the right place. Specifically, say I’m developing module A, then I will instruct the Nginx instance to route all requests to module A to my local web server, while route all other requests to “Development enviroment”.</p>
 <p>In this way, we only need to care about the module we developed. Other modules are built and updated automatically.</p>
@@ -126,7 +144,92 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/07/setup_nginx_for_msa_development/" data-id="cju7lic08000csiqa8hfvqynu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/08/setup_nginx_for_msa_development/" data-id="cju7lic08000csiqa8hfvqynu" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jvm_monitor" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/08/jvm_monitor/" class="article-date">
+  <time datetime="2019-04-08T00:10:02.669Z" itemprop="datePublished">2019-04-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/08/jvm_monitor/">Monitor JVM Process Remotely</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Monitor-JVM-from-command-line-locally"><a href="#Monitor-JVM-from-command-line-locally" class="headerlink" title="Monitor JVM from command line locally"></a>Monitor JVM from command line locally</h2><p>You can monitor your target JVM process with many tools, say <code>jstat</code>, <code>jinfo</code>, <code>jstack</code>, <code>jmap</code> and so on.</p>
+<p>First find out <code>vimid</code> with</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps -l</span><br></pre></td></tr></table></figure>
+<p>and then run</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo &lt;vimid&gt;</span><br></pre></td></tr></table></figure>
+<p>But for the first time, you may get the following errors</p>
+<blockquote>
+<p>Error attaching to process: sun.jvm.hotspot.debugger.DebuggerException: Can’t attach to the process … not permitted …</p>
+</blockquote>
+<p>After some googling, we can slove it by (it’s due to a bug of Linux kernal)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope</span><br></pre></td></tr></table></figure>
+<h2 id="Mointor-JVM-with-graphical-tools-remotely"><a href="#Mointor-JVM-with-graphical-tools-remotely" class="headerlink" title="Mointor JVM with graphical tools remotely"></a>Mointor JVM with graphical tools remotely</h2><h3 id="Setup-JMX-RMI"><a href="#Setup-JMX-RMI" class="headerlink" title="Setup JMX RMI"></a>Setup JMX RMI</h3><p>Besides using commands locally, we can also use graphical tools like <code>Jconsole</code> or <code>VisualVM</code> to monitor a JVM process remotely. The latter one is a replacement for the former one.</p>
+<p>To enable such remote monitoring, you need to make your remote JVM process to be ready for remote JMX RMI connections.</p>
+<p>Here is the <a href="https://docs.oracle.com/javase/9/management/monitoring-and-management-using-jmx-technology.htm" target="_blank" rel="noopener">official reference</a>.</p>
+<p>I summarize my steps as following.</p>
+<p>cp JRE_HOME/lib/management/management.properties to home directory<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">com.sun.management.jmxremote.port=xxx</span><br><span class="line">com.sun.management.jmxremote.ssl=false</span><br><span class="line">com.sun.management.jmxremote.authenticate=true</span><br><span class="line">com.sun.management.jmxremote.password.file=/home/benson/jmxremote.password</span><br><span class="line">com.sun.management.jmxremote.access.file=/home/benson/jmxremote.access</span><br><span class="line">com.sun.management.jmxremote.rmi.port=xxx // this is very important, let&apos;s talk about it later</span><br></pre></td></tr></table></figure></p>
+<p>cp JRE_HOME/lib/management/jmxremote.password.template to home directory as jmxremote.password.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">monitorRole xxx</span><br><span class="line">controlRole xxx</span><br></pre></td></tr></table></figure></p>
+<p>For security reason, you have to change it as owner readable/writable only<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 jmxremote.password</span><br></pre></td></tr></table></figure></p>
+<p>cp JRE_HOME/lib/management/jmxremote.access to home directory.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">monitorRole   readonly</span><br><span class="line">controlRole   readwrite \</span><br><span class="line">              create javax.management.monitor.*,javax.management.timer.* \</span><br><span class="line">              unregiste</span><br></pre></td></tr></table></figure></p>
+<p>start your jar with your mangement file specified<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar -Dcom.sun.management.config.file=$HOME/management.properties -Djava.rmi.server.hostname=xx.xx.xx.xx xxx.jar</span><br></pre></td></tr></table></figure></p>
+<p>Please note that <code>java.rmi.server.hostname</code> is also important here. According to the offical document</p>
+<blockquote>
+<p>By default, the remote stubs for locally created remote objects that are sent to client contains the IP address of the local host in dotted-quad format. For remote stubs to be associated with a specific interface address, the java.rmi.server.hostname system property must be set to IP address of that interface.</p>
+</blockquote>
+<p>In my case, if I start my remote Java VM without <code>java.rmi.server.hostname</code> being specified to the remote public IP, with Jconsole started with <code>-debug</code>, I got error</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java.rmi.ConnectException: Connection refused to host: 127.0.0.1; nested exception is: </span><br><span class="line">	java.net.ConnectException: Connection refused (Connection refused)</span><br><span class="line">	at sun.rmi.transport.tcp.TCPEndpoint.newSocket(TCPEndpoint.java:619)</span><br></pre></td></tr></table></figure>
+<p>As I mentioned earilier, if you are in a serious production environment(with restrcit firewall rule), you probably need to setup <code>com.sun.management.jmxremote.rmi.port</code> as well.</p>
+<p>According to the offical document</p>
+<blockquote>
+<p>setting this property(<code>com.sun.management.jmxremote.port=portNum</code>) publishes an additional RMI connector in a private read-only registry at the specified port using the name, jmxrmi. The port number to which the RMI connector will be bound using the system property:<br><strong>com.sun.management.jmxremote.rmi.port</strong></p>
+</blockquote>
+<p>If this property is not specified, it will randomly pick an unused port. As a result, if you are using white list for your firewall rule, connections to your remote JVM process will be blocked.</p>
+<p>Lastly, please notice that when adding JMX connection in VisualVM, you need to specify <code>com.sun.management.jmxremote.port</code> rather than <code>com.sun.management.jmxremote.rmi.port</code>. Then former one should be where the RMI registry listen to. </p>
+<h3 id="Connect-to-remote-server-with-jvisualvm"><a href="#Connect-to-remote-server-with-jvisualvm" class="headerlink" title="Connect to remote server with jvisualvm"></a>Connect to remote server with jvisualvm</h3><p>It’s straight forward to setup your jvisualvm client. Just note that if you follow my preivous steps, you need to specify the credentials configed in file <code>jmxremote.password</code>.</p>
+<h3 id="Setup-Jstatd-Optional"><a href="#Setup-Jstatd-Optional" class="headerlink" title="Setup Jstatd (Optional)"></a>Setup Jstatd (Optional)</h3><p>Alike to JMX, Jstatd also provides you ability to monitor JVM. But it’s much more limited. There is a comparison between JMX and Jstatd <a href="https://blog.jakubholy.net/2012/09/21/visualvm-monitoring-remote-jvm-over-ssh-jmx-or-not/" target="_blank" rel="noopener">here</a>.</p>
+<p>In average cases, JMX is enough for you. The reason why I need to setup <code>Jstatd</code> is that <code>Visual GC</code> plugin is based on it. The <code>heap</code> graph coming with raw VisualVM is too simple to do meanful JVM memory monitoring.</p>
+<p>Starting <code>Jstatd</code> directly will give you error<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Could not create remote object</span><br><span class="line">access denied (&quot;java.util.PropertyPermission&quot; &quot;java.rmi.server.ignoreSubClasses&quot; &quot;write&quot;)</span><br><span class="line">java.security.AccessControlException: access denied (&quot;java.util.PropertyPermission&quot; &quot;java.rmi.server.ignoreSubClasses&quot; &quot;write&quot;)</span><br><span class="line">        at java.security.AccessControlContext.checkPermission(AccessControlContext.java:372)</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
+<p>You can refer to the offical document <a href="https://docs.oracle.com/javase/1.5.0/docs/tooldocs/share/jstatd.html" target="_blank" rel="noopener">Jstatd</a> and <a href="https://docs.oracle.com/javase/1.5.0/docs/guide/security/PolicyFiles.html" target="_blank" rel="noopener">Policy File Syntax</a>.</p>
+<p>Basically, you need to first setup a policy file<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grant codebase &quot;file:$&#123;java.home&#125;/../lib/tools.jar&quot; &#123;</span><br><span class="line">   permission java.security.AllPermission;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>The above config uses <a href="https://docs.oracle.com/javase/1.5.0/docs/guide/security/PolicyFiles.html#PropertyExp" target="_blank" rel="noopener">Property Expansion</a>. Please note that</p>
+<blockquote>
+<p>If a property can’t be expanded in a grant entry, permission entry, or keystore entry, that entry is ignored.</p>
+</blockquote>
+<p>Then start jstatd with<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstatd -J-Djava.security.policy=/home/benson/jmxremote/jstatd.all.policy  -J-Djava.rmi.server.hostname=xxx</span><br></pre></td></tr></table></figure></p>
+<p>you may also specify <code>-J-Djava.rmi.server.logCalls=true</code> for debugging purpose.<br>Please note that you need to specify <code>java.rmi.server.hostname</code> as before.</p>
+<p>By default, the above command will start jstatd with an internal RMI registry, bound to the default port 1099. Besides, it will also randomly pick a port for the RMI connector.</p>
+<blockquote>
+<p>Note: If your JVM process is behind a firewall, you need to take special care to have this random port open to your monitor client.</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/08/jvm_monitor/" data-id="cju7lic07000bsiqahpzzt72t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -138,17 +241,27 @@
   
     <article id="post-import_spring_framework_source" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/07/import_spring_framework_source/" class="article-date">
-  <time datetime="2019-04-07T12:43:15.208Z" itemprop="datePublished">2019-04-07</time>
+    <a href="/2019/04/08/import_spring_framework_source/" class="article-date">
+  <time datetime="2019-04-08T00:09:44.366Z" itemprop="datePublished">2019-04-08</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/08/import_spring_framework_source/">Import spring-framework into Eclipse</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Import-spring-framework-into-Eclipse"><a href="#Import-spring-framework-into-Eclipse" class="headerlink" title="Import spring-framework into Eclipse"></a>Import spring-framework into Eclipse</h1><p>Basically, you just need to follow this guide from spring-framwork <a href="https://github.com/spring-projects/spring-framework/blob/master/import-into-eclipse.md" target="_blank" rel="noopener">github page</a></p>
+        <p>Basically, you just need to follow this guide from spring-framwork <a href="https://github.com/spring-projects/spring-framework/blob/master/import-into-eclipse.md" target="_blank" rel="noopener">github page</a></p>
 <blockquote>
 <p>Note that I checkout the <code>master</code> branch</p>
 </blockquote>
@@ -206,82 +319,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/07/import_spring_framework_source/" data-id="cju7lic06000asiqa39wq0k57" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-jvm_monitor" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/07/jvm_monitor/" class="article-date">
-  <time datetime="2019-04-07T11:23:32.193Z" itemprop="datePublished">2019-04-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Monitor-JVM-Process-Remotely"><a href="#Monitor-JVM-Process-Remotely" class="headerlink" title="Monitor JVM Process Remotely"></a>Monitor JVM Process Remotely</h1><h2 id="Monitor-JVM-from-command-line-locally"><a href="#Monitor-JVM-from-command-line-locally" class="headerlink" title="Monitor JVM from command line locally"></a>Monitor JVM from command line locally</h2><p>You can monitor your target JVM process with many tools, say <code>jstat</code>, <code>jinfo</code>, <code>jstack</code>, <code>jmap</code> and so on.</p>
-<p>First find out <code>vimid</code> with</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps -l</span><br></pre></td></tr></table></figure>
-<p>and then run</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo &lt;vimid&gt;</span><br></pre></td></tr></table></figure>
-<p>But for the first time, you may get the following errors</p>
-<blockquote>
-<p>Error attaching to process: sun.jvm.hotspot.debugger.DebuggerException: Can’t attach to the process … not permitted …</p>
-</blockquote>
-<p>After some googling, we can slove it by (it’s due to a bug of Linux kernal)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope</span><br></pre></td></tr></table></figure>
-<h2 id="Mointor-JVM-with-graphical-tools-remotely"><a href="#Mointor-JVM-with-graphical-tools-remotely" class="headerlink" title="Mointor JVM with graphical tools remotely"></a>Mointor JVM with graphical tools remotely</h2><h3 id="Setup-JMX-RMI"><a href="#Setup-JMX-RMI" class="headerlink" title="Setup JMX RMI"></a>Setup JMX RMI</h3><p>Besides using commands locally, we can also use graphical tools like <code>Jconsole</code> or <code>VisualVM</code> to monitor a JVM process remotely. The latter one is a replacement for the former one.</p>
-<p>To enable such remote monitoring, you need to make your remote JVM process to be ready for remote JMX RMI connections.</p>
-<p>Here is the <a href="https://docs.oracle.com/javase/9/management/monitoring-and-management-using-jmx-technology.htm" target="_blank" rel="noopener">official reference</a>.</p>
-<p>I summarize my steps as following.</p>
-<p>cp JRE_HOME/lib/management/management.properties to home directory<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">com.sun.management.jmxremote.port=xxx</span><br><span class="line">com.sun.management.jmxremote.ssl=false</span><br><span class="line">com.sun.management.jmxremote.authenticate=true</span><br><span class="line">com.sun.management.jmxremote.password.file=/home/benson/jmxremote.password</span><br><span class="line">com.sun.management.jmxremote.access.file=/home/benson/jmxremote.access</span><br><span class="line">com.sun.management.jmxremote.rmi.port=xxx // this is very important, let&apos;s talk about it later</span><br></pre></td></tr></table></figure></p>
-<p>cp JRE_HOME/lib/management/jmxremote.password.template to home directory as jmxremote.password.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">monitorRole xxx</span><br><span class="line">controlRole xxx</span><br></pre></td></tr></table></figure></p>
-<p>For security reason, you have to change it as owner readable/writable only<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 jmxremote.password</span><br></pre></td></tr></table></figure></p>
-<p>cp JRE_HOME/lib/management/jmxremote.access to home directory.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">monitorRole   readonly</span><br><span class="line">controlRole   readwrite \</span><br><span class="line">              create javax.management.monitor.*,javax.management.timer.* \</span><br><span class="line">              unregiste</span><br></pre></td></tr></table></figure></p>
-<p>start your jar with your mangement file specified<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar -Dcom.sun.management.config.file=$HOME/management.properties -Djava.rmi.server.hostname=xx.xx.xx.xx xxx.jar</span><br></pre></td></tr></table></figure></p>
-<p>Please note that <code>java.rmi.server.hostname</code> is also important here. According to the offical document</p>
-<blockquote>
-<p>By default, the remote stubs for locally created remote objects that are sent to client contains the IP address of the local host in dotted-quad format. For remote stubs to be associated with a specific interface address, the java.rmi.server.hostname system property must be set to IP address of that interface.</p>
-</blockquote>
-<p>In my case, if I start my remote Java VM without <code>java.rmi.server.hostname</code> being specified to the remote public IP, with Jconsole started with <code>-debug</code>, I got error</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java.rmi.ConnectException: Connection refused to host: 127.0.0.1; nested exception is: </span><br><span class="line">	java.net.ConnectException: Connection refused (Connection refused)</span><br><span class="line">	at sun.rmi.transport.tcp.TCPEndpoint.newSocket(TCPEndpoint.java:619)</span><br></pre></td></tr></table></figure>
-<p>As I mentioned earilier, if you are in a serious production environment(with restrcit firewall rule), you probably need to setup <code>com.sun.management.jmxremote.rmi.port</code> as well.</p>
-<p>According to the offical document</p>
-<blockquote>
-<p>setting this property(<code>com.sun.management.jmxremote.port=portNum</code>) publishes an additional RMI connector in a private read-only registry at the specified port using the name, jmxrmi. The port number to which the RMI connector will be bound using the system property:<br><strong>com.sun.management.jmxremote.rmi.port</strong></p>
-</blockquote>
-<p>If this property is not specified, it will randomly pick an unused port. As a result, if you are using white list for your firewall rule, connections to your remote JVM process will be blocked.</p>
-<p>Lastly, please notice that when adding JMX connection in VisualVM, you need to specify <code>com.sun.management.jmxremote.port</code> rather than <code>com.sun.management.jmxremote.rmi.port</code>. Then former one should be where the RMI registry listen to. </p>
-<h3 id="Connect-to-remote-server-with-jvisualvm"><a href="#Connect-to-remote-server-with-jvisualvm" class="headerlink" title="Connect to remote server with jvisualvm"></a>Connect to remote server with jvisualvm</h3><p>It’s straight forward to setup your jvisualvm client. Just note that if you follow my preivous steps, you need to specify the credentials configed in file <code>jmxremote.password</code>.</p>
-<h3 id="Setup-Jstatd-Optional"><a href="#Setup-Jstatd-Optional" class="headerlink" title="Setup Jstatd (Optional)"></a>Setup Jstatd (Optional)</h3><p>Alike to JMX, Jstatd also provides you ability to monitor JVM. But it’s much more limited. There is a comparison between JMX and Jstatd <a href="https://blog.jakubholy.net/2012/09/21/visualvm-monitoring-remote-jvm-over-ssh-jmx-or-not/" target="_blank" rel="noopener">here</a>.</p>
-<p>In average cases, JMX is enough for you. The reason why I need to setup <code>Jstatd</code> is that <code>Visual GC</code> plugin is based on it. The <code>heap</code> graph coming with raw VisualVM is too simple to do meanful JVM memory monitoring.</p>
-<p>Starting <code>Jstatd</code> directly will give you error<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Could not create remote object</span><br><span class="line">access denied (&quot;java.util.PropertyPermission&quot; &quot;java.rmi.server.ignoreSubClasses&quot; &quot;write&quot;)</span><br><span class="line">java.security.AccessControlException: access denied (&quot;java.util.PropertyPermission&quot; &quot;java.rmi.server.ignoreSubClasses&quot; &quot;write&quot;)</span><br><span class="line">        at java.security.AccessControlContext.checkPermission(AccessControlContext.java:372)</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
-<p>You can refer to the offical document <a href="https://docs.oracle.com/javase/1.5.0/docs/tooldocs/share/jstatd.html" target="_blank" rel="noopener">Jstatd</a> and <a href="https://docs.oracle.com/javase/1.5.0/docs/guide/security/PolicyFiles.html" target="_blank" rel="noopener">Policy File Syntax</a>.</p>
-<p>Basically, you need to first setup a policy file<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grant codebase &quot;file:$&#123;java.home&#125;/../lib/tools.jar&quot; &#123;</span><br><span class="line">   permission java.security.AllPermission;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>The above config uses <a href="https://docs.oracle.com/javase/1.5.0/docs/guide/security/PolicyFiles.html#PropertyExp" target="_blank" rel="noopener">Property Expansion</a>. Please note that</p>
-<blockquote>
-<p>If a property can’t be expanded in a grant entry, permission entry, or keystore entry, that entry is ignored.</p>
-</blockquote>
-<p>Then start jstatd with<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstatd -J-Djava.security.policy=/home/benson/jmxremote/jstatd.all.policy  -J-Djava.rmi.server.hostname=xxx</span><br></pre></td></tr></table></figure></p>
-<p>you may also specify <code>-J-Djava.rmi.server.logCalls=true</code> for debugging purpose.<br>Please note that you need to specify <code>java.rmi.server.hostname</code> as before.</p>
-<p>By default, the above command will start jstatd with an internal RMI registry, bound to the default port 1099. Besides, it will also randomly pick a port for the RMI connector.</p>
-<blockquote>
-<p>Note: If your JVM process is behind a firewall, you need to take special care to have this random port open to your monitor client.</p>
-</blockquote>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/07/jvm_monitor/" data-id="cju7lic07000bsiqahpzzt72t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/08/import_spring_framework_source/" data-id="cju7lic06000asiqa39wq0k57" class="article-share-link">Share</a>
       
       
     </footer>
@@ -293,17 +331,27 @@
   
     <article id="post-gaaccess" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/07/gaaccess/" class="article-date">
-  <time datetime="2019-04-07T11:23:16.930Z" itemprop="datePublished">2019-04-07</time>
+    <a href="/2019/04/08/gaaccess/" class="article-date">
+  <time datetime="2019-04-08T00:09:18.314Z" itemprop="datePublished">2019-04-08</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/08/gaaccess/">Using GoAccess to monitor your nginx access log</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Using-GoAccess-to-monitor-your-nginx-access-log"><a href="#Using-GoAccess-to-monitor-your-nginx-access-log" class="headerlink" title="Using GoAccess to monitor your nginx access log"></a>Using GoAccess to monitor your nginx access log</h1><p>Suppose you built a Web site, you must be curious at how much traffic your site attract and how do people using it.</p>
+        <p>Suppose you built a Web site, you must be curious at how much traffic your site attract and how do people using it.</p>
 <p>You use Nginx as the coordinator server and you know you can analyze its access log.</p>
 <p>Analyzing plain text from stratch is hard, and here comes <a href="https://goaccess.io/" target="_blank" rel="noopener">GoAccess</a>, which is amazing.</p>
 <p>Here is how it looks.</p>
@@ -326,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/07/gaaccess/" data-id="cju7lic040008siqaxw2ul3t3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/08/gaaccess/" data-id="cju7lic040008siqaxw2ul3t3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -338,17 +386,27 @@
   
     <article id="post-copy_file" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/07/copy_file/" class="article-date">
-  <time datetime="2019-04-07T11:23:06.236Z" itemprop="datePublished">2019-04-07</time>
+    <a href="/2019/04/08/copy_file/" class="article-date">
+  <time datetime="2019-04-08T00:09:03.662Z" itemprop="datePublished">2019-04-08</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/08/copy_file/">How to copy files fastly</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="How-to-copy-files-fastly"><a href="#How-to-copy-files-fastly" class="headerlink" title="How to copy files fastly"></a>How to copy files fastly</h1><p>First let’s generate a dummy file for test. We can do it with the following cmd superly fast.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fallocate -l 2G copy_test.img</span><br></pre></td></tr></table></figure></p>
+        <p>First let’s generate a dummy file for test. We can do it with the following cmd superly fast.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fallocate -l 2G copy_test.img</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        File source = <span class="keyword">new</span> File(<span class="string">"/home/benson/develop/test/copy_test.img"</span>);</span><br><span class="line">        File target1 = <span class="keyword">new</span> File(<span class="string">"/home/benson/develop/test/target1.img"</span>);</span><br><span class="line">        File target2 = <span class="keyword">new</span> File(<span class="string">"/home/benson/develop/test/target2.img"</span>);</span><br><span class="line">        File target3 = <span class="keyword">new</span> File(<span class="string">"/home/benson/develop/test/target3.img"</span>);</span><br><span class="line">        System.out.println(<span class="string">"Source file is of size: "</span> + source.length());</span><br><span class="line">        <span class="keyword">long</span> pre = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">long</span> now = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">try</span>(FileInputStream fin = <span class="keyword">new</span> FileInputStream(source); FileOutputStream fout = <span class="keyword">new</span> FileOutputStream(target1)) &#123;</span><br><span class="line">            fin.getChannel().transferTo(<span class="number">0</span>, source.length(), fout.getChannel());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        now = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"NIO tranfer takes: "</span> + (now - pre));</span><br><span class="line">        pre = now;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Files.copy(source.toPath(), target2.toPath());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        now = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"Files.copy takes: "</span> + (now - pre));</span><br><span class="line">        pre = now;</span><br><span class="line">        <span class="keyword">try</span> (BufferedInputStream bin = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(source));</span><br><span class="line">             BufferedOutputStream bout = <span class="keyword">new</span> BufferedOutputStream(<span class="keyword">new</span> FileOutputStream(target3));) &#123;</span><br><span class="line">            <span class="keyword">byte</span>[] bs = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">512</span>];</span><br><span class="line">            <span class="keyword">int</span> count = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> ((count = bin.read(bs)) != -<span class="number">1</span>) &#123;</span><br><span class="line">                bout.write(bs, <span class="number">0</span>, count);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        now = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"BufferedInputStream takes: "</span> + (now - pre));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Output:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Source file is of size: 2147483648</span><br><span class="line">NIO tranfer takes: 893</span><br><span class="line">Files.copy takes: 3087</span><br><span class="line">BufferedInputStream takes: 13113</span><br></pre></td></tr></table></figure></p>
 <p>NIO <code>FileChannel::transfer</code> has the best performance. It utilizes direct ByteBuffer, which directly operates the file data in OS’s kernal space. While <code>Files::copy</code> and BufferedInputStream has to transfer data from kernal space and vise versa.</p>
@@ -359,7 +417,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/07/copy_file/" data-id="cju7lic030006siqa0d216amo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/08/copy_file/" data-id="cju7lic030006siqa0d216amo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -369,10 +427,10 @@
 
 
   
-    <article id="post-tmux" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-create-your-own-blog" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/11/04/tmux/" class="article-date">
-  <time datetime="2018-11-04T13:55:40.000Z" itemprop="datePublished">2018-11-04</time>
+    <a href="/2019/04/08/create-your-own-blog/" class="article-date">
+  <time datetime="2019-04-08T00:06:09.855Z" itemprop="datePublished">2019-04-08</time>
 </a>
     
   </div>
@@ -383,7 +441,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/04/tmux/">Use tmux to manage your remote server</a>
+      <a class="article-title" href="/2019/04/08/create-your-own-blog/">Create blog with Hexo on Git Page</a>
     </h1>
   
 
@@ -391,71 +449,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Concepts: one sesson can have multiple windows, and one window can have multiple panels.</p>
-<p>Suppose now you just ssh to your remote server.<br>First create a new tmux session. By default, it has one window and one panel in it.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux</span><br></pre></td></tr></table></figure></p>
-<p>Give the session a meaningful name, so that you can later attach to it easily<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; $</span><br></pre></td></tr></table></figure></p>
-<p>Give the current window a meaningful name<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; ,</span><br></pre></td></tr></table></figure></p>
-<p>Split the current panel<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; % // horizontally</span><br><span class="line">&lt;prefix&gt; <span class="string">" // vertically</span></span><br></pre></td></tr></table></figure></p>
-<p>Oops, you create a new panel by mistake. Let’s close it<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; x</span><br></pre></td></tr></table></figure></p>
-<p>And now you have too many panels in one window, let’s create a new window<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; c</span><br></pre></td></tr></table></figure></p>
-<p>Switch between windows<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; n // to next</span><br><span class="line">&lt;prefix&gt; p // to previous</span><br></pre></td></tr></table></figure></p>
-<p>And close a window<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; &amp; // close a window</span><br></pre></td></tr></table></figure></p>
-<p>Now you have your work done. While closing your connection to remote server, you want your program keep running.<br>Or, you want to pick up where you was later. It’s easy, just detach the session<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; d</span><br></pre></td></tr></table></figure></p>
-<p>Serval days later, you come back and want to resume your work. First, list all session alive in the backend.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux ls</span><br></pre></td></tr></table></figure></p>
-<p>Attach to your desired session by name<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux a -t &lt;name&gt;</span><br></pre></td></tr></table></figure></p>
-<p>These commands are pretty much you need for tmux.</p>
+        <p>After several comparison, I choose to use <code>Hexo</code> to build my personal blog. And for simplicity, I decide to use <code>Github Page</code> to host my blog.  </p>
+<p>Basically, you need to maintain two git repositories. One for <code>Hexo</code> itself, and another for the generated static files. The second is needed as <code>Github Page</code> requires its content to be push to a repository of certain name.</p>
+<p>generate static files<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure></p>
+<p>Copy generated files to the deploy folder (to be pushed to github)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># the first folder is where static files generated </span><br><span class="line"># You may need to also add the &quot;-n&quot; option to perform a dry run to see the changes in advance.</span><br><span class="line">rsync -avzh --delete --exclude &apos;.git&apos;  &lt;SOME_PATH&gt;/blog/public/ &lt;SOME_PATH&gt;/blog_deploy/</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://www.createdbypete.com/articles/a-practical-guide-to-using-rsync/" target="_blank" rel="noopener">rsync usage reference</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/04/tmux/" data-id="cju7lic09000dsiqau5qgwt98" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Operation-Linux/">Operation Linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope="" itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/11/04/hello-world/" class="article-date">
-  <time datetime="2018-11-04T12:09:11.266Z" itemprop="datePublished">2018-11-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/04/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/04/hello-world/" data-id="cju7lic050009siqacasp7wzc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/08/create-your-own-blog/" data-id="cju7lic040007siqa7bc1vzjt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -478,7 +481,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operation-Linux/">Operation Linux</a></li></ul>
+      <ul class="tag-list"></ul>
     </div>
   </div>
 
@@ -488,7 +491,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Operation-Linux/" style="font-size: 10px;">Operation Linux</a>
+      
     </div>
   </div>
 
@@ -497,7 +500,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
     </div>
   </div>
 
@@ -510,23 +513,23 @@
       <ul>
         
           <li>
-            <a href="/2019/04/08/create-your-own-blog/">Create blog with Hexo on Git Page</a>
+            <a href="/2019/04/08/tmux/">Use tmux to manage your remote server</a>
           </li>
         
           <li>
-            <a href="/2019/04/07/setup_nginx_for_msa_development/">(no title)</a>
+            <a href="/2019/04/08/setup_nginx_for_msa_development/">Setup Nginx for MSA Development</a>
           </li>
         
           <li>
-            <a href="/2019/04/07/import_spring_framework_source/">(no title)</a>
+            <a href="/2019/04/08/jvm_monitor/">Monitor JVM Process Remotely</a>
           </li>
         
           <li>
-            <a href="/2019/04/07/jvm_monitor/">(no title)</a>
+            <a href="/2019/04/08/import_spring_framework_source/">Import spring-framework into Eclipse</a>
           </li>
         
           <li>
-            <a href="/2019/04/07/gaaccess/">(no title)</a>
+            <a href="/2019/04/08/gaaccess/">Using GoAccess to monitor your nginx access log</a>
           </li>
         
       </ul>

@@ -5,19 +5,19 @@
   
 
   
-  <title>Hexo</title>
+  <title>Setup Nginx for MSA Development | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Setup Nginx for MSA DevelopmentProblems to solveOur product consists of several sub-systems. Each sub-system is developed and maintained by a different team. And code-wise, the entire product is organ">
+  <meta name="description" content="Problems to solveOur product consists of several sub-systems. Each sub-system is developed and maintained by a different team. And code-wise, the entire product is organized with Maven in a big Git re">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/2019/04/07/setup_nginx_for_msa_development/index.html">
+<meta property="og:title" content="Setup Nginx for MSA Development">
+<meta property="og:url" content="http://yoursite.com/2019/04/08/setup_nginx_for_msa_development/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Setup Nginx for MSA DevelopmentProblems to solveOur product consists of several sub-systems. Each sub-system is developed and maintained by a different team. And code-wise, the entire product is organ">
+<meta property="og:description" content="Problems to solveOur product consists of several sub-systems. Each sub-system is developed and maintained by a different team. And code-wise, the entire product is organized with Maven in a big Git re">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-07T13:55:36.770Z">
+<meta property="og:updated_time" content="2019-04-08T00:10:25.148Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="Setup Nginx for MSA DevelopmentProblems to solveOur product consists of several sub-systems. Each sub-system is developed and maintained by a different team. And code-wise, the entire product is organ">
+<meta name="twitter:title" content="Setup Nginx for MSA Development">
+<meta name="twitter:description" content="Problems to solveOur product consists of several sub-systems. Each sub-system is developed and maintained by a different team. And code-wise, the entire product is organized with Maven in a big Git re">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -66,17 +66,27 @@
       <div class="outer">
         <section id="main"><article id="post-setup_nginx_for_msa_development" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/07/setup_nginx_for_msa_development/" class="article-date">
-  <time datetime="2019-04-07T13:55:36.765Z" itemprop="datePublished">2019-04-07</time>
+    <a href="/2019/04/08/setup_nginx_for_msa_development/" class="article-date">
+  <time datetime="2019-04-08T00:10:25.148Z" itemprop="datePublished">2019-04-08</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Setup Nginx for MSA Development
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Setup-Nginx-for-MSA-Development"><a href="#Setup-Nginx-for-MSA-Development" class="headerlink" title="Setup Nginx for MSA Development"></a>Setup Nginx for MSA Development</h1><h2 id="Problems-to-solve"><a href="#Problems-to-solve" class="headerlink" title="Problems to solve"></a>Problems to solve</h2><p>Our product consists of several sub-systems. Each sub-system is developed and maintained by a different team. And code-wise, the entire product is organized with Maven in a big Git repository (acutally, better to be splitted) and each sub-system is maintained as a Maven module.</p>
+        <h2 id="Problems-to-solve"><a href="#Problems-to-solve" class="headerlink" title="Problems to solve"></a>Problems to solve</h2><p>Our product consists of several sub-systems. Each sub-system is developed and maintained by a different team. And code-wise, the entire product is organized with Maven in a big Git repository (acutally, better to be splitted) and each sub-system is maintained as a Maven module.</p>
 <p>Originally, to setup environment for development, we have to build all modules besides the ones we are turely responsible for. The drawback is obvious, it takes two much time to build the whole project. And as the number of modules increases, this problem becomes worser. In addition, to incooperate changes from other module during development, each time we have to recompile those modules. Although we can utilize Maven to only build partial or specific modules, it’s still a bit annoying.<br>Last but not least, it can be quite difficult to setup everything you needed if one modules have many indirect dependencies, which may require different configurations to startup. </p>
 <h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>To migarte this problem, we maintain a running product instance containing all sub-systems, which is updated on a regular basis (Say one day). Let’s call such environment as “Development environment”. And setup Nginx locally to route the requests generated during development to the right place. Specifically, say I’m developing module A, then I will instruct the Nginx instance to route all requests to module A to my local web server, while route all other requests to “Development enviroment”.</p>
 <p>In this way, we only need to care about the module we developed. Other modules are built and updated automatically.</p>
@@ -87,7 +97,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/07/setup_nginx_for_msa_development/" data-id="cju7lic08000csiqa8hfvqynu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/08/setup_nginx_for_msa_development/" data-id="cju7lic08000csiqa8hfvqynu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -96,19 +106,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/04/08/create-your-own-blog/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/04/08/tmux/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Create blog with Hexo on Git Page
+          Use tmux to manage your remote server
         
       </div>
     </a>
   
   
-    <a href="/2019/04/07/import_spring_framework_source/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/04/08/jvm_monitor/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title"></div>
+      <div class="article-nav-title">Monitor JVM Process Remotely</div>
     </a>
   
 </nav>
@@ -127,7 +137,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Operation-Linux/">Operation Linux</a></li></ul>
+      <ul class="tag-list"></ul>
     </div>
   </div>
 
@@ -137,7 +147,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Operation-Linux/" style="font-size: 10px;">Operation Linux</a>
+      
     </div>
   </div>
 
@@ -146,7 +156,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
     </div>
   </div>
 
@@ -159,23 +169,23 @@
       <ul>
         
           <li>
-            <a href="/2019/04/08/create-your-own-blog/">Create blog with Hexo on Git Page</a>
+            <a href="/2019/04/08/tmux/">Use tmux to manage your remote server</a>
           </li>
         
           <li>
-            <a href="/2019/04/07/setup_nginx_for_msa_development/">(no title)</a>
+            <a href="/2019/04/08/setup_nginx_for_msa_development/">Setup Nginx for MSA Development</a>
           </li>
         
           <li>
-            <a href="/2019/04/07/import_spring_framework_source/">(no title)</a>
+            <a href="/2019/04/08/jvm_monitor/">Monitor JVM Process Remotely</a>
           </li>
         
           <li>
-            <a href="/2019/04/07/jvm_monitor/">(no title)</a>
+            <a href="/2019/04/08/import_spring_framework_source/">Import spring-framework into Eclipse</a>
           </li>
         
           <li>
-            <a href="/2019/04/07/gaaccess/">(no title)</a>
+            <a href="/2019/04/08/gaaccess/">Using GoAccess to monitor your nginx access log</a>
           </li>
         
       </ul>
