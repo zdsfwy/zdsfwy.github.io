@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>HikariPool-1 - Connection is not available | Benson&#39;s IT notes or summaries</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="This afternoon, I got a report that website A is not accessible. I login the server and first checked the nginx error log. It says connection to upstream is timed out. 1234...2019/04/20 09:58:42 [erro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HikariPool-1 - Connection is not available">
+<meta property="og:url" content="http://yoursite.com/2019/04/20/connect_is_not_available/index.html">
+<meta property="og:site_name" content="Benson&#39;s IT notes or summaries">
+<meta property="og:description" content="This afternoon, I got a report that website A is not accessible. I login the server and first checked the nginx error log. It says connection to upstream is timed out. 1234...2019/04/20 09:58:42 [erro">
+<meta property="og:locale" content="English or Chinese">
+<meta property="og:updated_time" content="2019-04-20T12:43:39.842Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HikariPool-1 - Connection is not available">
+<meta name="twitter:description" content="This afternoon, I got a report that website A is not accessible. I login the server and first checked the nginx error log. It says connection to upstream is timed out. 1234...2019/04/20 09:58:42 [erro">
+  
+    <link rel="alternate" href="/atom.xml" title="Benson&#39;s IT notes or summaries" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Benson&#39;s IT notes or summaries</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Continuously updated on a irregular basis</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-connect_is_not_available" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/20/connect_is_not_available/" class="article-date">
+  <time datetime="2019-04-20T09:27:00.000Z" itemprop="datePublished">2019-04-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HikariPool-1 - Connection is not available
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>This afternoon, I got a report that website A is not accessible. I login the server and first checked the nginx error log. It says connection to upstream is timed out.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">2019/04/20 09:58:42 [error] 6327#0: *129762 upstream timed out (110: Connection timed out) while reading response header from upstream, client: &lt;xxx.xxx.xx.xx&gt;, server: &lt;xxx.xxxxxxxx.xxx&gt;, request: &quot;GET /api/user/me HTTP/1.1&quot;, upstream: &quot;http://127.0.0.1:5000/api/user/me&quot;, host: &quot;&lt;xxx.xxxxxxxx.xxx&gt;&quot;, referrer: &quot;https://&lt;xxx.xxxxxxxx.xxx&gt;/page/home&quot;</span><br><span class="line">2019/04/20 09:58:42 [error] 6327#0: *129763 upstream timed out (110: Connection timed out) while reading response header from upstream, client: &lt;xxx.xxx.xx.xx&gt;, server: &lt;xxx.xxxxxxxx.xxx&gt;, request: &quot;GET /api/home/loadHomeData HTTP/1.1&quot;, upstream: &quot;http://127.0.0.1:5000/api/home/loadHomeData&quot;, host: &quot;&lt;xxx.xxxxxxxx.xxx&gt;&quot;, referrer: &quot;https://&lt;xxx.xxxxxxxx.xxx&gt;/page/home&quot;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>Then I checked log from Spring</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.transaction.CannotCreateTransactionException: Could not open JPA EntityManager for transaction; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection</span><br><span class="line">		...</span><br><span class="line">Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection</span><br><span class="line">        ... 61 common frames omitted</span><br><span class="line">Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30000ms.</span><br><span class="line">		...</span><br></pre></td></tr></table></figure>
+<p>It clearly indicates that connection pool is running out of free connections. Connections are not returned to connection pool as expected. Incoming requests temping to acquire connection wait on it and finally timed out, which further caused the reading from nginx timed out.</p>
+<p>For interest, I checked the network connection status with</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -peanut</span><br></pre></td></tr></table></figure>
+<p>As shown below, majortiy of them are in <code>CLOSE_WAIT</code>. If you still remember the state transition for TCP, the sever side of a TCP connection will enter <code>CLOSE_WAIT</code> state when it receive <code>FIN</code> from its client. Thus, we can infer that the connection is originally issued from <code>127.0.0.1:xxxxx</code> to <code>127.0.0.1:5000</code>. This make sense, as <code>127.0.0.1:5000</code> is the upstream server to which where Nginx proxy incoming requests.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode       PID/Program name</span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:13160         CLOSE_WAIT  1000       66628224    4209/java       </span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:13152         CLOSE_WAIT  1000       66628218    4209/java       </span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:57766         CLOSE_WAIT  1000       62175223    4209/java       </span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:21812         CLOSE_WAIT  1000       71135785    4209/java       </span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:13150         CLOSE_WAIT  1000       66628836    4209/java       </span><br><span class="line">...</span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:13794         CLOSE_WAIT  1000       66644609    4209/java       </span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:13154         CLOSE_WAIT  1000       66628222    4209/java       </span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:13792         CLOSE_WAIT  1000       66637431    4209/java       </span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:30190         CLOSE_WAIT  1000       64263646    4209/java       </span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:13228         CLOSE_WAIT  1000       66629637    4209/java       </span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:35004         CLOSE_WAIT  1000       72919978    4209/java       </span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:13210         CLOSE_WAIT  1000       66629002    4209/java       </span><br><span class="line">tcp        1      0 127.0.0.1:5000          127.0.0.1:13198         CLOSE_WAIT  1000       66628344    4209/java</span><br></pre></td></tr></table></figure>
+<p>So, the problem is clear. Then what’s the cause? Unfortunately, previously I didn’t enable <code>HikariCP</code>‘s Connect leak detection. And I also didn’t enable Postgresql’s slow log.</p>
+<p><code>HikariCP</code> is the default connection pool used by Spring boot since 2.0. I checked its configuration with Spring boot actuator endpoint.</p>
+<p>For your interest, the actuator was configed as following<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ActuatorSecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        http.requestMatcher(EndpointRequest.toAnyEndpoint()).authorizeRequests()</span><br><span class="line">                .anyRequest().hasRole(<span class="string">"SUPER_ADMIN"</span>)</span><br><span class="line">                .and()</span><br><span class="line">                .httpBasic();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Since the upstream server is only bind to 127.0.0.1, I can only invoke that endpoint within the server.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">curl -u &lt;account&gt;:&lt;password&gt;  http://127.0.0.1:5000/actuator/configprops</span><br><span class="line">``` </span><br><span class="line">Yes, sad but <span class="literal">true</span>, `leakDetectionThreshold` is the default value 0 (disabled).</span><br><span class="line"></span><br><span class="line">To <span class="built_in">enable</span> it, add the following config <span class="keyword">in</span> my `application.yml`</span><br><span class="line">```yaml</span><br><span class="line">spring:</span><br><span class="line">    datasource:</span><br><span class="line">        hikari:</span><br><span class="line">            leak-detection-threshold: 30000 <span class="comment"># 30 seconds</span></span><br></pre></td></tr></table></figure>
+<p>By the way, I also change <code>com.zaxxer.hikari</code>‘s log level to <code>DEBUG</code> by following the adivce from the Author of <code>HikariCP</code> <a href="https://github.com/brettwooldridge/HikariCP/issues/1111#issuecomment-373111306" target="_blank" rel="noopener">here</a>.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// logback-spring.xml in classpath root</span><br><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">resource</span>=<span class="string">"org/springframework/boot/logging/logback/base.xml"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">"com.zaxxer.hikari"</span> <span class="attr">level</span>=<span class="string">"DEBUG"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>That’s what I have done to enhance my spring-boot server. Hope it can catch some useful info when the same problem happened again.</p>
+<p>That’s not enough, Postgresql as the database should be able to tell something useful too. So I enable the slow query log there. Edit in <code>postgresql.conf</code>.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># log to file with suffix &quot;.log&quot;</span><br><span class="line">log_destination = &apos;stderr&apos;</span><br><span class="line"># required to be on for generating log</span><br><span class="line">loggin_collector = on</span><br><span class="line"># the direction should exist and postgres server should has the read&amp;write permission</span><br><span class="line">log_directly = &apos;/var/log/postgresql&apos;</span><br><span class="line">log_filename = &apos;postgresql-%Y-%m-%d_%H%M%S.log&apos;</span><br><span class="line"># enable log file rotation</span><br><span class="line">log_truncate_on_rotation = on</span><br><span class="line"># rotate log file on a daily basis</span><br><span class="line">log_rotation_age = 1d</span><br><span class="line"># if a query takes more that 2 seconds, log it out</span><br><span class="line">log_min_duration_statement = 2000</span><br><span class="line"># if this set to not `none`, then log_min_duration_statement will be ignored</span><br><span class="line">log_statement = &apos;none&apos;</span><br><span class="line">log_timezone = &apos;Asia/Shanghai&apos;</span><br></pre></td></tr></table></figure></p>
+<p>You can locate <code>postgresql.conf</code> file with query:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> config_file;</span><br></pre></td></tr></table></figure>
+<p>Some fields require a restarting after modified. If not required, then simple execute the below SQL is enough to make it take effect.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> pg_reload_conf();</span><br></pre></td></tr></table></figure>
+<p>Try with</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> pg_sleep(<span class="number">7.5</span>);</span><br></pre></td></tr></table></figure>
+<p>A corresponding log should have been logged into the correct place.</p>
+<blockquote>
+<p>You can also read this <a href="https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing" target="_blank" rel="noopener">article</a> which mentions that simply increasing <code>maximumPoolSize</code> as a countermeansure for this problem is not a good idea.</p>
+</blockquote>
+<p>References:</p>
+<p><a href="https://dev.to/pythonmeister/how-to-identify-slow-queries-in-postgresql-4igk" target="_blank" rel="noopener">How to identify slow queries in PostgreSQL</a></p>
+<p><a href="https://tableplus.io/blog/2018/10/how-to-show-queries-log-in-postgresql.html" target="_blank" rel="noopener">How to show queries log in PostgreSQL?</a></p>
+<p><a href="https://github.com/brettwooldridge/HikariCP" target="_blank" rel="noopener">HikariCP</a></p>
+<p><a href="https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html" target="_blank" rel="noopener">Production Ready Endpoints</a></p>
+<p><a href="https://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html" target="_blank" rel="noopener">logging</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/20/connect_is_not_available/" data-id="cjuphwy860000y4qaqjwq52mx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/08/copy_file/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">How to copy files fastly</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/20/connect_is_not_available/">HikariPool-1 - Connection is not available</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/08/copy_file/">How to copy files fastly</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/08/create-your-own-blog/">Create blog with Hexo on Git Page</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/08/gaaccess/">Using GoAccess to monitor your nginx access log</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/08/import_spring_framework_source/">Import spring-framework into Eclipse</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Beson<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
